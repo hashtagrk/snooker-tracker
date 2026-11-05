@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Three-Handed Snooker</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Oswald:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --slate: #15181a;
+    --slate-rail: #1c2124;
+    --slate-sink: #0f1113;
+    --baize: #13503a;
+    --baize-lit: #1a6b4c;
+    --brass: #c9a24a;
+    --brass-dim: #8a6f33;
+    --chalk: #f2ece0;
+    --chalk-dim: #9aa39c;
+
+    --ball-red: #c4231f;
+    --ball-yellow: #e8c23a;
+    --ball-green: #1f7a46;
+    --ball-brown: #6b4328;
+    --ball-blue: #1f5fb0;
+    --ball-pink: #e2749a;
+    --ball-black: #141414;
+
+    --display: "Instrument Serif", Georgia, serif;
+    --board: "Oswald", ui-sans-serif, system-ui, sans-serif;
+
+    --step: clamp(0.9rem, 0.85rem + 0.3vw, 1rem);
+    --score: clamp(2.8rem, 1.6rem + 6vw, 5rem);
+    --radius: 10px;
+  }
+
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    padding-block: clamp(1rem, 0.6rem + 1.6vw, 2rem);
+    padding-left: 16px;
+    padding-right: 16px;
+    background:
+      radial-gradient(130% 60% at 50% -10%, #23292b 0%, var(--slate) 55%, var(--slate-sink) 100%);
+    color: var(--chalk);
+    font-family: var(--board);
+    font-size: var(--step);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .board { max-width: 1040px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(1rem, 0.7rem + 1.2vw, 1.75rem); }
+
+  /* ---------- header ---------- */
+  .masthead { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 0.75rem 1.5rem; border-bottom: 1px solid var(--brass-dim); padding-bottom: 0.75rem; }
+  .masthead h1 { font-family: var(--display); font-weight: 400; font-size: clamp(1.9rem, 1.4rem + 2vw, 2.9rem); line-height: 1; margin: 0; letter-spacing: 0.01em; text-wrap: balance; }
+  .masthead h1 em { color: var(--brass); font-style: italic; }
+  .masthead .spacer { flex: 1 1 2rem; }
+
+  .eyebrow { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--brass); }
+
+  /* ---------- foul rule switch ---------- */
+  .foulrule { display: flex; flex-direction: column; gap: 0.35rem; }
+  .segments { display: flex; border: 1px solid var(--brass-dim); border-radius: 999px; overflow: hidden; background: var(--slate-sink); }
+  .segments button {
+    appearance: none; border: 0; background: transparent; color: var(--chalk-dim);
+    font-family: var(--board); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.45rem 0.85rem; cursor: pointer; transition: background 160ms ease, color 160ms ease;
+  }
+  .segments button:hover { color: var(--chalk); background: #24292b; }
+  .segments button[aria-pressed="true"] { background: var(--brass); color: #1a1407; }
+
+  /* ---------- player rails ---------- */
+  .rails { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+  .rail {
+    position: relative; display: flex; flex-direction: column; gap: 0.3rem;
+    padding: 0.9rem 1rem 1rem; border-radius: var(--radius);
+    background: var(--slate-rail); border: 1px solid #262c2f; border-left: 4px solid #2c3337;
+    transition: background 220ms ease, border-color 220ms ease, transform 220ms ease;
+  }
+  .rail.at-table {
+    background: linear-gradient(160deg, var(--baize-lit) 0%, var(--baize) 70%);
+    border-color: var(--brass-dim); border-left-color: var(--brass);
+    box-shadow: 0 10px 28px -16px #000, inset 0 1px 0 #ffffff1f;
+  }
+  .rail .turn { min-height: 1rem; color: var(--brass); opacity: 0; transition: opacity 200ms ease; }
+  .rail.at-table .turn { opacity: 1; }
+  .rail input {
+    appearance: none; border: 0; border-bottom: 1px dotted #ffffff2e; background: transparent;
+    color: var(--chalk); font-family: var(--board); font-size: 0.95rem; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase; padding: 0.1rem 0 0.2rem; width: 100%; min-width: 0;
+  }
+  .rail input::placeholder { color: var(--chalk-dim); }
+  .rail input:focus-visible { outline: 2px solid var(--brass); outline-offset: 3px; border-radius: 3px; }
+  .rail .score {
+    font-size: var(--score); font-weight: 500; line-height: 0.95; font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em; transition: transform 140ms ease;
+  }
+  .rail .score.bump { transform: scale(1.06); }
+  .rail .tally { font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--chalk-dim); font-variant-numeric: tabular-nums; }
+  .rail.at-table .tally { color: #cfe3d6; }
+
+  /* ---------- the table ---------- */
+  .table {
+    border-radius: var(--radius); padding: clamp(0.9rem, 0.6rem + 1vw, 1.4rem);
+    background:
+      repeating-linear-gradient(90deg, #ffffff07 0 1px, transparent 1px 4px),
+      linear-gradient(175deg, var(--baize-lit), var(--baize) 60%, #0f3f2e);
+    border: 6px solid #4a3418; box-shadow: inset 0 3px 18px #00000066, 0 14px 34px -22px #000;
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+  .balls { display: grid; grid-template-columns: repeat(7, 1fr); gap: clamp(0.4rem, 0.2rem + 0.8vw, 0.9rem); }
+  .ball {
+    position: relative; aspect-ratio: 1; max-width: 100%; border-radius: 50%; border: 0; cursor: pointer;
+    color: #fff; font-family: var(--board); font-size: clamp(1rem, 0.7rem + 1.4vw, 1.6rem); font-weight: 500;
+    background-image: radial-gradient(circle at 32% 26%, #ffffffc4 0 6%, #ffffff40 12%, transparent 46%);
+    box-shadow: inset 0 -6px 14px #00000073, 0 6px 14px -6px #000;
+    transition: transform 110ms ease, box-shadow 110ms ease;
+  }
+  .ball:hover { transform: translateY(-3px); box-shadow: inset 0 -6px 14px #00000073, 0 12px 20px -8px #000; }
+  .ball:active { transform: translateY(1px) scale(0.97); }
+  .ball:focus-visible { outline: 3px solid var(--chalk); outline-offset: 3px; }
+  .ball[disabled] { cursor: not-allowed; opacity: 0.32; transform: none; box-shadow: inset 0 -6px 14px #00000073; }
+  .ball .left {
+    position: absolute; inset-inline: 0; bottom: -1.35rem; font-size: 0.68rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--chalk); font-variant-numeric: tabular-nums;
+  }
+  .b-red { background-color: var(--ball-red); }
+  .b-yellow { background-color: var(--ball-yellow); color: #2a2202; }
+  .b-green { background-color: var(--ball-green); }
+  .b-brown { background-color: var(--ball-brown); }
+  .b-blue { background-color: var(--ball-blue); }
+  .b-pink { background-color: var(--ball-pink); color: #40131f; }
+  .b-black { background-color: var(--ball-black); }
+
+  .cushion { height: 1px; background: linear-gradient(90deg, transparent, #ffffff2b, transparent); margin-top: 0.6rem; }
+
+  /* ---------- fouls + actions ---------- */
+  .controls { display: flex; flex-wrap: wrap; gap: 1rem 1.75rem; align-items: flex-end; }
+  .group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .group .eyebrow { color: #d8ebdf; }
+  .row { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .chip {
+    appearance: none; cursor: pointer; font-family: var(--board); font-size: 0.85rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase; padding: 0.5rem 0.8rem; border-radius: 6px;
+    color: var(--chalk); background: #0d2c20cc; border: 1px solid #ffffff2b;
+    font-variant-numeric: tabular-nums; transition: background 140ms ease, border-color 140ms ease, transform 110ms ease;
+  }
+  .chip:hover { background: #0a2419; border-color: var(--chalk); }
+  .chip:active { transform: translateY(1px); }
+  .chip:focus-visible { outline: 3px solid var(--chalk); outline-offset: 2px; }
+  .chip.primary { background: var(--brass); border-color: var(--brass); color: #1a1407; }
+  .chip.primary:hover { background: #dcb257; }
+  .chip.quiet { background: transparent; }
+  .chip[disabled] { opacity: 0.35; cursor: not-allowed; }
+  .chip.armed { background: var(--ball-red); border-color: var(--ball-red); color: #fff; }
+  .chip.armed:hover { background: #d62b26; }
+
+  footer { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; justify-content: space-between; color: var(--chalk-dim); font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; }
+  kbd { font-family: var(--board); background: #22282a; border: 1px solid #343b3e; border-bottom-width: 2px; border-radius: 4px; padding: 0.05rem 0.3rem; color: var(--chalk); }
+
+  @media (max-width: 760px) {
+    .rails { grid-template-columns: 1fr; }
+    .rail { flex-direction: row; align-items: baseline; flex-wrap: wrap; gap: 0.25rem 0.9rem; }
+    .rail .names { flex: 1 1 8rem; }
+    .rail .turn { flex-basis: 100%; min-height: 0; }
+    .rail .score { font-size: clamp(2.2rem, 1.4rem + 5vw, 3rem); }
+    .rail .tally { flex-basis: 100%; }
+    .balls { grid-template-columns: repeat(4, 1fr); row-gap: 1.9rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition-duration: 0ms !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+<main class="board">
+  <header class="masthead">
+    <h1>Three-Handed <em>Snooker</em></h1>
+    <div class="spacer"></div>
+    <div class="foulrule">
+      <span class="eyebrow" id="foul-label">Foul points go to</span>
+      <div class="segments" role="group" aria-labelledby="foul-label">
+        <button type="button" id="foul-both" aria-pressed="true">Both opponents</button>
+        <button type="button" id="foul-next" aria-pressed="false">Next player</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="rails" id="rails" aria-label="Scores"></section>
+
+  <section class="table" aria-label="Table">
+    <div class="group">
+      <span class="eyebrow">Pot</span>
+      <div class="balls" id="balls"></div>
+      <div class="cushion"></div>
+    </div>
+
+    <div class="controls">
+      <div class="group">
+        <span class="eyebrow">Foul &mdash; ends the visit</span>
+        <div class="row" id="fouls"></div>
+      </div>
+      <div class="group">
+        <span class="eyebrow">Table</span>
+        <div class="row">
+          <button type="button" class="chip" id="red-off">Red off &mdash; no score</button>
+        </div>
+      </div>
+      <div class="group">
+        <span class="eyebrow">Visit</span>
+        <div class="row">
+          <button type="button" class="chip primary" id="end-visit">End visit</button>
+          <button type="button" class="chip" id="undo">Undo</button>
+          <button type="button" class="chip quiet" id="new-frame">New frame</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span id="rule-note">A foul awards its points to both opponents and ends the visit.</span>
+    <span><kbd>1</kbd>&ndash;<kbd>7</kbd> pot &middot; <kbd>F</kbd> then <kbd>4</kbd>&ndash;<kbd>7</kbd> foul &middot; <kbd>Space</kbd> end visit &middot; <kbd>R</kbd> red off &middot; <kbd>U</kbd> undo</span>
+  </footer>
+</main>
+
+<script>
+  var BALLS = [
+    { name: "Red", value: 1, cls: "b-red" },
+    { name: "Yellow", value: 2, cls: "b-yellow" },
+    { name: "Green", value: 3, cls: "b-green" },
+    { name: "Brown", value: 4, cls: "b-brown" },
+    { name: "Blue", value: 5, cls: "b-blue" },
+    { name: "Pink", value: 6, cls: "b-pink" },
+    { name: "Black", value: 7, cls: "b-black" }
+  ];
+  var STORE = "three-handed-snooker";
+
+  function freshFrame() {
+    return { names: ["", "", ""], scores: [0, 0, 0], highs: [0, 0, 0], current: 0, brk: 0, reds: 15, foulTo: "both" };
+  }
+
+  var state = freshFrame();
+  var past = [];
+
+  function load() {
+    try {
+      var raw = localStorage.getItem(STORE);
+      if (!raw) return;
+      var saved = JSON.parse(raw);
+      if (saved && Array.isArray(saved.scores) && saved.scores.length === 3) state = Object.assign(freshFrame(), saved);
+    } catch (e) { /* storage unavailable - start a fresh frame */ }
+  }
+  function save() {
+    try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) { /* nothing to do */ }
+  }
+  function snapshot() {
+    past.push(JSON.stringify(state));
+    if (past.length > 200) past.shift();
+  }
+
+  /* ---------- build the rails and the balls once ---------- */
+  var railEls = [];
+  var rails = document.getElementById("rails");
+  for (var i = 0; i < 3; i++) {
+    var rail = document.createElement("div");
+    rail.className = "rail";
+    rail.innerHTML =
+      '<span class="eyebrow turn">At the table</span>' +
+      '<span class="names"><input id="name-' + i + '" placeholder="Player ' + (i + 1) + '" aria-label="Player ' + (i + 1) + ' name" maxlength="18"></span>' +
+      '<span class="score" aria-live="polite">0</span>' +
+      '<span class="tally"></span>';
+    rails.appendChild(rail);
+    railEls.push({
+      root: rail,
+      input: rail.querySelector("input"),
+      score: rail.querySelector(".score"),
+      tally: rail.querySelector(".tally")
+    });
+  }
+
+  var ballEls = [];
+  var ballRow = document.getElementById("balls");
+  BALLS.forEach(function (ball, idx) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "ball " + ball.cls;
+    b.textContent = String(ball.value);
+    b.setAttribute("aria-label", "Pot " + ball.name.toLowerCase() + ", " + ball.value + (ball.value === 1 ? " point" : " points"));
+    if (idx === 0) {
+      var left = document.createElement("span");
+      left.className = "left";
+      b.appendChild(left);
+      b.leftEl = left;
+    }
+    b.addEventListener("click", function () { pot(ball.value, idx === 0); });
+    ballRow.appendChild(b);
+    ballEls.push(b);
+  });
+
+  var foulRow = document.getElementById("fouls");
+  [4, 5, 6, 7].forEach(function (v) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip";
+    b.textContent = "Foul " + v;
+    b.setAttribute("aria-label", "Foul, " + v + " points");
+    b.addEventListener("click", function () { foul(v); });
+    foulRow.appendChild(b);
+  });
+
+  /* ---------- actions ---------- */
+  function pot(value, isRed) {
+    if (isRed && state.reds === 0) return;
+    snapshot();
+    state.scores[state.current] += value;
+    state.brk += value;
+    if (state.brk > state.highs[state.current]) state.highs[state.current] = state.brk;
+    if (isRed) state.reds -= 1;
+    render(state.current);
+  }
+
+  function foul(value) {
+    snapshot();
+    if (state.foulTo === "both") {
+      for (var i = 0; i < 3; i++) if (i !== state.current) state.scores[i] += value;
+    } else {
+      state.scores[(state.current + 1) % 3] += value;
+    }
+    state.brk = 0;
+    state.current = (state.current + 1) % 3;
+    render();
+  }
+
+  function redOff() {
+    if (state.reds === 0) return;
+    snapshot();
+    state.reds -= 1;
+    render();
+  }
+
+  function endVisit() {
+    snapshot();
+    state.brk = 0;
+    state.current = (state.current + 1) % 3;
+    render();
+  }
+
+  function undo() {
+    var prev = past.pop();
+    if (!prev) return;
+    var names = state.names.slice();
+    state = JSON.parse(prev);
+    state.names = names;
+    render();
+  }
+
+  var resetArmed = null;
+  function disarmReset() {
+    var btn = document.getElementById("new-frame");
+    clearTimeout(resetArmed);
+    resetArmed = null;
+    btn.textContent = "New frame";
+    btn.classList.remove("armed");
+  }
+  function newFrame() {
+    var btn = document.getElementById("new-frame");
+    if (!resetArmed) {
+      btn.textContent = "Tap again to reset";
+      btn.classList.add("armed");
+      resetArmed = setTimeout(disarmReset, 5000);
+      return;
+    }
+    disarmReset();
+    var names = state.names.slice();
+    var foulTo = state.foulTo;
+    past = [];
+    state = freshFrame();
+    state.names = names;
+    state.foulTo = foulTo;
+    render();
+  }
+
+  /* ---------- render ---------- */
+  function render(bumped) {
+    for (var i = 0; i < 3; i++) {
+      var r = railEls[i];
+      var atTable = i === state.current;
+      r.root.classList.toggle("at-table", atTable);
+      if (r.input.value !== state.names[i]) r.input.value = state.names[i];
+      r.score.textContent = String(state.scores[i]);
+      r.tally.textContent = (atTable ? "Break " + state.brk : "High break " + state.highs[i]) +
+        (atTable && state.highs[i] ? " \u00b7 high " + state.highs[i] : "");
+      if (i === bumped) {
+        r.score.classList.add("bump");
+        setTimeout(function (el) { return function () { el.classList.remove("bump"); }; }(r.score), 140);
+      }
+    }
+
+    ballEls[0].disabled = state.reds === 0;
+    ballEls[0].leftEl.textContent = state.reds + " left";
+    document.getElementById("red-off").disabled = state.reds === 0;
+    document.getElementById("undo").disabled = past.length === 0;
+
+    var both = state.foulTo === "both";
+    document.getElementById("foul-both").setAttribute("aria-pressed", String(both));
+    document.getElementById("foul-next").setAttribute("aria-pressed", String(!both));
+    document.getElementById("rule-note").textContent = both
+      ? "A foul awards its points to both opponents and ends the visit."
+      : "A foul awards its points to the next player and ends the visit.";
+
+    save();
+  }
+
+  /* ---------- wiring ---------- */
+  railEls.forEach(function (r, i) {
+    r.input.addEventListener("input", function () { state.names[i] = r.input.value; save(); });
+  });
+  document.getElementById("red-off").addEventListener("click", redOff);
+  document.getElementById("end-visit").addEventListener("click", endVisit);
+  document.getElementById("undo").addEventListener("click", undo);
+  document.getElementById("new-frame").addEventListener("click", newFrame);
+  document.getElementById("foul-both").addEventListener("click", function () { state.foulTo = "both"; render(); });
+  document.getElementById("foul-next").addEventListener("click", function () { state.foulTo = "next"; render(); });
+
+  var foulArmed = false;
+  document.addEventListener("keydown", function (e) {
+    if (e.target && e.target.tagName === "INPUT") return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var k = e.key.toLowerCase();
+    if (k === "f") { foulArmed = true; return; }
+    if (k >= "1" && k <= "7") {
+      var v = Number(k);
+      if (foulArmed) { if (v >= 4) foul(v); foulArmed = false; }
+      else pot(v, v === 1);
+      e.preventDefault();
+      return;
+    }
+    foulArmed = false;
+    if (k === " " || k === "spacebar") { endVisit(); e.preventDefault(); }
+    else if (k === "u") { undo(); e.preventDefault(); }
+    else if (k === "r") { redOff(); e.preventDefault(); }
+  });
+
+  load();
+  render();
+</script>
+</body>
+</html>
