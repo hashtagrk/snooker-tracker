@@ -1,0 +1,15 @@
+{
+  "appId": "com.hashtagrk.snookertracker",
+  "appName": "Snooker",
+  "webDir": "www",
+  "backgroundColor": "#15181a",
+  "ios": {
+    "contentInset": "never"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false,
+      "backgroundColor": "#15181a"
+    }
+  }
+}

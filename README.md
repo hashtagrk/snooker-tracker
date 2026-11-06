@@ -49,3 +49,22 @@ colours-in-sequence endgame, and it has no free-ball or miss handling.
 The frame is saved in the browser it is open in, so a refresh mid-frame loses nothing —
 but it stays on that one device. This is one scoreboard at the table, not three phones
 in sync.
+
+## iPhone app
+
+The same page ships as a native iOS app through [Capacitor](https://capacitorjs.com). In the app the frame is
+also saved to native storage (iOS can clear a web view's localStorage), and the fonts are bundled, so it works
+offline. `index.html` still opens on its own in a browser with no build step.
+
+You need a Mac with Xcode (free from the App Store) and an Apple ID.
+
+1. `npm install`, then `npm run ios`. This copies the page and fonts into `www/`, syncs them into `ios/`, and opens Xcode.
+2. In Xcode, select the **App** target → **Signing & Capabilities**, tick **Automatically manage signing**, and choose your Apple ID as the **Team**.
+3. Plug in your iPhone, unlock it, tap **Trust**, and pick it as the run destination at the top of Xcode.
+4. On the iPhone, turn on **Settings → Privacy & Security → Developer Mode** (it asks to restart).
+5. Press **Run** (⌘R). The first time, approve the developer under **Settings → General → VPN & Device Management**.
+
+With a free Apple ID the app runs for 7 days before it needs reinstalling from Xcode.
+
+After editing `index.html`, run `npm run ios:sync` and press Run again. Icon and splash sources live in
+`assets/`; regenerate them with `npm run assets`.
