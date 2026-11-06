@@ -1,0 +1,427 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		14B37C82F3AFCF69C3D31CA9 /* FrameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4211CC05992100A298B73 /* FrameTests.swift */; };
+		1A07E1988A86F62B8EF1C7BF /* SnookerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2E209752E2F980702AE809 /* SnookerApp.swift */; };
+		1FF8EAC9445A286079892895 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3342C8E320E43A643935BF74 /* Theme.swift */; };
+		4C31F9D5D23668175F9B1CBA /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38548A6D6D5820F80F2327A4 /* Frame.swift */; };
+		93F0175CB6CFC5BF2D0F1B5C /* ScoreboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4558C21C09DDE75CD2BB5B9 /* ScoreboardView.swift */; };
+		BB33AC258EEA55C96586E465 /* Scoreboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4140B55547B76D2F1B8CEB7 /* Scoreboard.swift */; };
+		CE30C504FDEC8569105CD9EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DD29BF573BDEEC266ED102A /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2A89F0E831B90985D63F8722 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 98756271C86AFCBE14722B00 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2CEAC533618F60972F251C9E;
+			remoteInfo = Snooker;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0717F5CDBDD8CA18A9751096 /* Snooker.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Snooker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3342C8E320E43A643935BF74 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		38548A6D6D5820F80F2327A4 /* Frame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
+		5DD29BF573BDEEC266ED102A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6A2E209752E2F980702AE809 /* SnookerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnookerApp.swift; sourceTree = "<group>"; };
+		7FD4211CC05992100A298B73 /* FrameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameTests.swift; sourceTree = "<group>"; };
+		7FF4CF4329DD7868C181C384 /* SnookerTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SnookerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		95BC8FEBCB9ABF210928FF2F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B4140B55547B76D2F1B8CEB7 /* Scoreboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scoreboard.swift; sourceTree = "<group>"; };
+		F4558C21C09DDE75CD2BB5B9 /* ScoreboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreboardView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0FD7A1683234E1427F1117A0 = {
+			isa = PBXGroup;
+			children = (
+				10F8ECA6011D269C45BD78D8 /* Snooker */,
+				B6F50A08B381CFC66F52BDEA /* SnookerTests */,
+				534F7A636B5E3AE9783970A0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		10F8ECA6011D269C45BD78D8 /* Snooker */ = {
+			isa = PBXGroup;
+			children = (
+				5DD29BF573BDEEC266ED102A /* Assets.xcassets */,
+				38548A6D6D5820F80F2327A4 /* Frame.swift */,
+				95BC8FEBCB9ABF210928FF2F /* Info.plist */,
+				B4140B55547B76D2F1B8CEB7 /* Scoreboard.swift */,
+				F4558C21C09DDE75CD2BB5B9 /* ScoreboardView.swift */,
+				6A2E209752E2F980702AE809 /* SnookerApp.swift */,
+				3342C8E320E43A643935BF74 /* Theme.swift */,
+			);
+			path = Snooker;
+			sourceTree = "<group>";
+		};
+		534F7A636B5E3AE9783970A0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0717F5CDBDD8CA18A9751096 /* Snooker.app */,
+				7FF4CF4329DD7868C181C384 /* SnookerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B6F50A08B381CFC66F52BDEA /* SnookerTests */ = {
+			isa = PBXGroup;
+			children = (
+				7FD4211CC05992100A298B73 /* FrameTests.swift */,
+			);
+			path = SnookerTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2CEAC533618F60972F251C9E /* Snooker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 935F50CD5869B2CE19E04B28 /* Build configuration list for PBXNativeTarget "Snooker" */;
+			buildPhases = (
+				4B21ED98AFC33E4BFB659536 /* Sources */,
+				D2CD26C3A0C76B98E630DA6E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Snooker;
+			packageProductDependencies = (
+			);
+			productName = Snooker;
+			productReference = 0717F5CDBDD8CA18A9751096 /* Snooker.app */;
+			productType = "com.apple.product-type.application";
+		};
+		46DDA5328C65A73B7E4CCBF7 /* SnookerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2ECAB3866BEE78F9F0E400D6 /* Build configuration list for PBXNativeTarget "SnookerTests" */;
+			buildPhases = (
+				9B84B5AC2A61C5B4824C3FA9 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B2B6D94739FB6FDE8E5D0171 /* PBXTargetDependency */,
+			);
+			name = SnookerTests;
+			packageProductDependencies = (
+			);
+			productName = SnookerTests;
+			productReference = 7FF4CF4329DD7868C181C384 /* SnookerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		98756271C86AFCBE14722B00 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					2CEAC533618F60972F251C9E = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 79C6518B94BF113A4BC96877 /* Build configuration list for PBXProject "Snooker" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 0FD7A1683234E1427F1117A0;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 534F7A636B5E3AE9783970A0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2CEAC533618F60972F251C9E /* Snooker */,
+				46DDA5328C65A73B7E4CCBF7 /* SnookerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D2CD26C3A0C76B98E630DA6E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE30C504FDEC8569105CD9EB /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4B21ED98AFC33E4BFB659536 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C31F9D5D23668175F9B1CBA /* Frame.swift in Sources */,
+				BB33AC258EEA55C96586E465 /* Scoreboard.swift in Sources */,
+				93F0175CB6CFC5BF2D0F1B5C /* ScoreboardView.swift in Sources */,
+				1A07E1988A86F62B8EF1C7BF /* SnookerApp.swift in Sources */,
+				1FF8EAC9445A286079892895 /* Theme.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9B84B5AC2A61C5B4824C3FA9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				14B37C82F3AFCF69C3D31CA9 /* FrameTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B2B6D94739FB6FDE8E5D0171 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2CEAC533618F60972F251C9E /* Snooker */;
+			targetProxy = 2A89F0E831B90985D63F8722 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0D6028C44D186BD9837C9E69 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		2A4DB3F38992D961C29D2F70 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hashtagrk.snookertracker.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Snooker.app/Snooker";
+			};
+			name = Debug;
+		};
+		75C8E0D03C391290CC3FF153 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = Snooker/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hashtagrk.snookertracker;
+				PRODUCT_NAME = Snooker;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		7719D7F9E7243B9EB470AC83 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hashtagrk.snookertracker.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Snooker.app/Snooker";
+			};
+			name = Release;
+		};
+		8906B398B8AE692670EB8B6E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = Snooker/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hashtagrk.snookertracker;
+				PRODUCT_NAME = Snooker;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		F44122D710E8C00045878769 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2ECAB3866BEE78F9F0E400D6 /* Build configuration list for PBXNativeTarget "SnookerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A4DB3F38992D961C29D2F70 /* Debug */,
+				7719D7F9E7243B9EB470AC83 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		79C6518B94BF113A4BC96877 /* Build configuration list for PBXProject "Snooker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F44122D710E8C00045878769 /* Debug */,
+				0D6028C44D186BD9837C9E69 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		935F50CD5869B2CE19E04B28 /* Build configuration list for PBXNativeTarget "Snooker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				75C8E0D03C391290CC3FF153 /* Debug */,
+				8906B398B8AE692670EB8B6E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 98756271C86AFCBE14722B00 /* Project object */;
+}
