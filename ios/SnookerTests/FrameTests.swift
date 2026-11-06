@@ -66,13 +66,36 @@ final class FrameTests: XCTestCase {
         frame.pot(5)
         XCTAssertEqual(frame.scores[0], 0, "a colour cannot be potted first")
         frame.pot(1)
-        XCTAssertEqual((1...7).filter(frame.canPot), [2, 3, 4, 5, 6, 7], "a colour after a red")
+        XCTAssertEqual((1...7).filter(frame.canPot), [1, 2, 3, 4, 5, 6, 7], "a colour, or another red on the same shot")
         frame.pot(7)
         XCTAssertEqual((1...7).filter(frame.canPot), [1], "back to a red")
         frame.pot(1)
         frame.endVisit()
         XCTAssertEqual((1...7).filter(frame.canPot), [1], "the next visit starts on a red")
         XCTAssertFalse((1...7).contains(where: frame.isOffTable))
+    }
+
+    func testTwoRedsOnOneShotThenOneColour() {
+        var frame = Frame()
+        frame.pot(1)
+        frame.pot(1)
+        XCTAssertEqual(frame.reds, 13)
+        XCTAssertTrue(frame.colourOn, "still owed a colour")
+        frame.pot(7)
+        XCTAssertEqual(frame.scores[0], 9)
+        XCTAssertEqual((1...7).filter(frame.canPot), [1], "one colour, then back to a red")
+        XCTAssertEqual(frame.visits.first?.balls, [1, 1, 7])
+    }
+
+    func testTwoLastRedsTogetherGiveTheFreeColour() {
+        var frame = Frame()
+        frame.reds = 2
+        frame.pot(1)
+        frame.pot(1)
+        XCTAssertEqual(frame.reds, 0)
+        XCTAssertTrue(frame.freeColour)
+        XCTAssertFalse(frame.colourOn)
+        XCTAssertEqual((1...7).filter(frame.canPot), [2, 3, 4, 5, 6, 7])
     }
 
     func testFoulAfterARedPutsTheNextPlayerOnARed() {

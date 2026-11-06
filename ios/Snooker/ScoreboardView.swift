@@ -171,7 +171,7 @@ struct ScoreboardView: View {
     }
 
     private var potLabel: String {
-        if frame.reds > 0 { return frame.colourOn ? "Pot — a colour" : "Pot — a red" }
+        if frame.reds > 0 { return frame.colourOn ? "Pot — a colour, or another red on the same shot" : "Pot — a red" }
         if frame.freeColour { return "Pot — any colour after the last red" }
         if frame.on <= 7 { return "Colours in order — \(Ball.all[frame.on - 1].name.lowercased()) is on" }
         return "Table cleared"

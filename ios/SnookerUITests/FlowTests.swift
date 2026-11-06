@@ -23,6 +23,7 @@ final class FlowTests: XCTestCase {
         XCTAssertFalse(app.buttons["Pot yellow, 2 points"].isEnabled, "a visit starts on a red")
         app.buttons["Pot red, 1 point"].tap()
         XCTAssertTrue(app.buttons["Pot black, 7 points"].isEnabled, "a colour after a red")
+        XCTAssertTrue(app.buttons["Pot red, 1 point"].isEnabled, "or another red on the same shot")
         app.buttons["Pot black, 7 points"].tap()
         app.buttons["Pot red, 1 point"].tap()
         app.buttons["Pot pink, 6 points"].tap()

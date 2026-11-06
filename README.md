@@ -70,7 +70,8 @@ the same look, built from native controls:
   Saved players (Raj, Ajay, Anvay and Ninad to start) seat with a tap; star a typed name to save
   it, press and hold a saved name to remove it. A frame in progress can be resumed from here,
   and New frame on the table offers "Change players" to come back
-- on the table: a visit starts on a red and a colour can only follow a red; fouls go to every
+- on the table: a visit starts on a red and a colour can only follow a red (tap red again for
+  two or more reds on one shot, then the one colour); fouls go to every
   opponent; tap a player to put them at the table; Foul 5/6/7 wear blue, pink and black
 - History: who potted which balls and who fouled, visit by visit, for this frame and the
   last 30

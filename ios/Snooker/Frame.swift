@@ -67,10 +67,11 @@ struct Frame: Codable, Equatable {
         names[seat].isEmpty ? "Player \(seat + 1)" : names[seat]
     }
 
-    /// Red, then a colour, then red again while reds remain. After the last red any one
-    /// colour may be taken; after that the colours come off in order.
+    /// Red, then a colour, then red again while reds remain. A red stays on after a red,
+    /// because one shot can pot two or more reds (a point each) before the colour.
+    /// After the last red any one colour may be taken; then the colours come off in order.
     func canPot(_ value: Int) -> Bool {
-        if value == 1 { return reds > 0 && !colourOn }
+        if value == 1 { return reds > 0 }
         if reds > 0 { return colourOn }
         if freeColour { return true }
         return value == on
@@ -90,7 +91,9 @@ struct Frame: Codable, Equatable {
         highBreaks[current] = max(highBreaks[current], currentBreak)
         if value == 1 {
             reds -= 1
-            if reds == 0 { freeColour = true } else { colourOn = true }
+            // the last red (even as the second red of one shot) hands over to the free colour
+            colourOn = reds > 0
+            freeColour = reds == 0
         } else if reds > 0 {
             colourOn = false
         } else if freeColour {
