@@ -10,6 +10,7 @@
 		14B37C82F3AFCF69C3D31CA9 /* FrameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4211CC05992100A298B73 /* FrameTests.swift */; };
 		1A07E1988A86F62B8EF1C7BF /* SnookerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2E209752E2F980702AE809 /* SnookerApp.swift */; };
 		1FF8EAC9445A286079892895 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3342C8E320E43A643935BF74 /* Theme.swift */; };
+		4847A5E5737C02CB43732306 /* IntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F790B3866230E0164226227 /* IntroView.swift */; };
 		4C31F9D5D23668175F9B1CBA /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38548A6D6D5820F80F2327A4 /* Frame.swift */; };
 		93F0175CB6CFC5BF2D0F1B5C /* ScoreboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4558C21C09DDE75CD2BB5B9 /* ScoreboardView.swift */; };
 		BB33AC258EEA55C96586E465 /* Scoreboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4140B55547B76D2F1B8CEB7 /* Scoreboard.swift */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		0717F5CDBDD8CA18A9751096 /* Snooker.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Snooker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F790B3866230E0164226227 /* IntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroView.swift; sourceTree = "<group>"; };
 		3342C8E320E43A643935BF74 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		38548A6D6D5820F80F2327A4 /* Frame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
 		5DD29BF573BDEEC266ED102A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -55,6 +57,7 @@
 				5DD29BF573BDEEC266ED102A /* Assets.xcassets */,
 				38548A6D6D5820F80F2327A4 /* Frame.swift */,
 				95BC8FEBCB9ABF210928FF2F /* Info.plist */,
+				1F790B3866230E0164226227 /* IntroView.swift */,
 				B4140B55547B76D2F1B8CEB7 /* Scoreboard.swift */,
 				F4558C21C09DDE75CD2BB5B9 /* ScoreboardView.swift */,
 				6A2E209752E2F980702AE809 /* SnookerApp.swift */,
@@ -170,6 +173,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C31F9D5D23668175F9B1CBA /* Frame.swift in Sources */,
+				4847A5E5737C02CB43732306 /* IntroView.swift in Sources */,
 				BB33AC258EEA55C96586E465 /* Scoreboard.swift in Sources */,
 				93F0175CB6CFC5BF2D0F1B5C /* ScoreboardView.swift in Sources */,
 				1A07E1988A86F62B8EF1C7BF /* SnookerApp.swift in Sources */,

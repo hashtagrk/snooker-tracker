@@ -61,9 +61,11 @@ player in sync.
 
 ## iPhone app
 
-`ios/` is a native SwiftUI app — not the web page in a wrapper. It has the same rules and
+`ios/` is **Snookerin**, a native SwiftUI app — not the web page in a wrapper. It has the same rules and
 the same look, built from native controls:
 
+- a three-second intro when it opens (tap to skip): Break-off, Pot the black, Ball letters or
+  Cue strike, chosen in `IntroStyle` — launch with `-introStyle cueStrike` to try another
 - the whole frame fits on one screen, with the table at the bottom where a thumb reaches it
 - haptics on pots, fouls and end of visit; New frame asks for confirmation
 - the screen stays awake while the app is open, so the phone can sit on the table

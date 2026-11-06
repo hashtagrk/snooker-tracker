@@ -17,7 +17,7 @@ targets:
     info:
       path: Snooker/Info.plist
       properties:
-        CFBundleDisplayName: Snooker
+        CFBundleDisplayName: Snookerin
         UILaunchScreen:
           UIColorName: LaunchBackground
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]

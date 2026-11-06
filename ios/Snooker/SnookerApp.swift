@@ -4,6 +4,7 @@ import UIKit
 @main
 struct SnookerApp: App {
     @State private var board = Scoreboard()
+    @State private var showingIntro = true
     @Environment(\.scenePhase) private var scenePhase
 
     init() {
@@ -18,8 +19,17 @@ struct SnookerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ScoreboardView(board: board)
-                .preferredColorScheme(.dark)
+            ZStack {
+                ScoreboardView(board: board)
+                if showingIntro {
+                    IntroView(style: .current) {
+                        withAnimation(.easeOut(duration: 0.35)) { showingIntro = false }
+                    }
+                    .transition(.opacity)
+                    .zIndex(1)
+                }
+            }
+            .preferredColorScheme(.dark)
         }
         .onChange(of: scenePhase, initial: true) { _, phase in
             // The phone sits on the table between shots; it should not lock mid-frame.
