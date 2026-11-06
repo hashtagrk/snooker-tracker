@@ -35,6 +35,20 @@
                ReferencedContainer = "container:Snooker.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "51875E1F54D96DCF9A9BF351"
+               BuildableName = "SnookerUITests.xctest"
+               BlueprintName = "SnookerUITests"
+               ReferencedContainer = "container:Snooker.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -61,6 +75,17 @@
                BlueprintIdentifier = "46DDA5328C65A73B7E4CCBF7"
                BuildableName = "SnookerTests.xctest"
                BlueprintName = "SnookerTests"
+               ReferencedContainer = "container:Snooker.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "51875E1F54D96DCF9A9BF351"
+               BuildableName = "SnookerUITests.xctest"
+               BlueprintName = "SnookerUITests"
                ReferencedContainer = "container:Snooker.xcodeproj">
             </BuildableReference>
          </TestableReference>

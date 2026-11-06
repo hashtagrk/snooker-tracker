@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F67948604E0BFDC5114D6CC /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3BEF6340F214C0778BCA8C /* HistoryView.swift */; };
 		13D8F7B40A2211E0515643D3 /* Roster.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5EF785865D9F51651E7567 /* Roster.swift */; };
 		14B37C82F3AFCF69C3D31CA9 /* FrameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4211CC05992100A298B73 /* FrameTests.swift */; };
 		1A07E1988A86F62B8EF1C7BF /* SnookerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2E209752E2F980702AE809 /* SnookerApp.swift */; };
@@ -14,6 +15,7 @@
 		28AEE61618B9985A75F1AE3E /* SetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC512FF72524B0FA23E4E480 /* SetupView.swift */; };
 		4847A5E5737C02CB43732306 /* IntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F790B3866230E0164226227 /* IntroView.swift */; };
 		4C31F9D5D23668175F9B1CBA /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38548A6D6D5820F80F2327A4 /* Frame.swift */; };
+		62F2AE5323D1F155BD56F6E6 /* FlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065DE989006F488C3A07027E /* FlowTests.swift */; };
 		93F0175CB6CFC5BF2D0F1B5C /* ScoreboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4558C21C09DDE75CD2BB5B9 /* ScoreboardView.swift */; };
 		BB33AC258EEA55C96586E465 /* Scoreboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4140B55547B76D2F1B8CEB7 /* Scoreboard.swift */; };
 		CE30C504FDEC8569105CD9EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DD29BF573BDEEC266ED102A /* Assets.xcassets */; };
@@ -27,21 +29,31 @@
 			remoteGlobalIDString = 2CEAC533618F60972F251C9E;
 			remoteInfo = Snooker;
 		};
+		64D1C0EF9CEEDA8BCDD53325 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 98756271C86AFCBE14722B00 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2CEAC533618F60972F251C9E;
+			remoteInfo = Snooker;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		065DE989006F488C3A07027E /* FlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTests.swift; sourceTree = "<group>"; };
 		0717F5CDBDD8CA18A9751096 /* Snooker.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Snooker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F790B3866230E0164226227 /* IntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroView.swift; sourceTree = "<group>"; };
 		3342C8E320E43A643935BF74 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		38548A6D6D5820F80F2327A4 /* Frame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
 		5DD29BF573BDEEC266ED102A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6A2E209752E2F980702AE809 /* SnookerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnookerApp.swift; sourceTree = "<group>"; };
+		6D3BEF6340F214C0778BCA8C /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		7FD4211CC05992100A298B73 /* FrameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameTests.swift; sourceTree = "<group>"; };
 		7FF4CF4329DD7868C181C384 /* SnookerTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SnookerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		95BC8FEBCB9ABF210928FF2F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B4140B55547B76D2F1B8CEB7 /* Scoreboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scoreboard.swift; sourceTree = "<group>"; };
 		BC512FF72524B0FA23E4E480 /* SetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupView.swift; sourceTree = "<group>"; };
 		BD5EF785865D9F51651E7567 /* Roster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Roster.swift; sourceTree = "<group>"; };
+		CA1128C3DD8DA2508893B7A4 /* SnookerUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SnookerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4558C21C09DDE75CD2BB5B9 /* ScoreboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreboardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -51,6 +63,7 @@
 			children = (
 				10F8ECA6011D269C45BD78D8 /* Snooker */,
 				B6F50A08B381CFC66F52BDEA /* SnookerTests */,
+				3B6B61D17EB7962A056C3A23 /* SnookerUITests */,
 				534F7A636B5E3AE9783970A0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -60,6 +73,7 @@
 			children = (
 				5DD29BF573BDEEC266ED102A /* Assets.xcassets */,
 				38548A6D6D5820F80F2327A4 /* Frame.swift */,
+				6D3BEF6340F214C0778BCA8C /* HistoryView.swift */,
 				95BC8FEBCB9ABF210928FF2F /* Info.plist */,
 				1F790B3866230E0164226227 /* IntroView.swift */,
 				BD5EF785865D9F51651E7567 /* Roster.swift */,
@@ -72,11 +86,20 @@
 			path = Snooker;
 			sourceTree = "<group>";
 		};
+		3B6B61D17EB7962A056C3A23 /* SnookerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				065DE989006F488C3A07027E /* FlowTests.swift */,
+			);
+			path = SnookerUITests;
+			sourceTree = "<group>";
+		};
 		534F7A636B5E3AE9783970A0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				0717F5CDBDD8CA18A9751096 /* Snooker.app */,
 				7FF4CF4329DD7868C181C384 /* SnookerTests.xctest */,
+				CA1128C3DD8DA2508893B7A4 /* SnookerUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -128,6 +151,24 @@
 			productReference = 7FF4CF4329DD7868C181C384 /* SnookerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		51875E1F54D96DCF9A9BF351 /* SnookerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9094731D1D83A76EA3E06666 /* Build configuration list for PBXNativeTarget "SnookerUITests" */;
+			buildPhases = (
+				5D90523255946740468CADAE /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B73DE1F11EF485DD705BA962 /* PBXTargetDependency */,
+			);
+			name = SnookerUITests;
+			packageProductDependencies = (
+			);
+			productName = SnookerUITests;
+			productReference = CA1128C3DD8DA2508893B7A4 /* SnookerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -139,6 +180,9 @@
 				TargetAttributes = {
 					2CEAC533618F60972F251C9E = {
 						ProvisioningStyle = Automatic;
+					};
+					51875E1F54D96DCF9A9BF351 = {
+						TestTargetID = 2CEAC533618F60972F251C9E;
 					};
 				};
 			};
@@ -158,6 +202,7 @@
 			targets = (
 				2CEAC533618F60972F251C9E /* Snooker */,
 				46DDA5328C65A73B7E4CCBF7 /* SnookerTests */,
+				51875E1F54D96DCF9A9BF351 /* SnookerUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -179,6 +224,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C31F9D5D23668175F9B1CBA /* Frame.swift in Sources */,
+				0F67948604E0BFDC5114D6CC /* HistoryView.swift in Sources */,
 				4847A5E5737C02CB43732306 /* IntroView.swift in Sources */,
 				13D8F7B40A2211E0515643D3 /* Roster.swift in Sources */,
 				BB33AC258EEA55C96586E465 /* Scoreboard.swift in Sources */,
@@ -186,6 +232,14 @@
 				28AEE61618B9985A75F1AE3E /* SetupView.swift in Sources */,
 				1A07E1988A86F62B8EF1C7BF /* SnookerApp.swift in Sources */,
 				1FF8EAC9445A286079892895 /* Theme.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5D90523255946740468CADAE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				62F2AE5323D1F155BD56F6E6 /* FlowTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,6 +258,11 @@
 			isa = PBXTargetDependency;
 			target = 2CEAC533618F60972F251C9E /* Snooker */;
 			targetProxy = 2A89F0E831B90985D63F8722 /* PBXContainerItemProxy */;
+		};
+		B73DE1F11EF485DD705BA962 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2CEAC533618F60972F251C9E /* Snooker */;
+			targetProxy = 64D1C0EF9CEEDA8BCDD53325 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -319,6 +378,23 @@
 			};
 			name = Release;
 		};
+		7E4F8FAE90FAA1378F3AD6E7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hashtagrk.snookertracker.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Snooker;
+			};
+			name = Debug;
+		};
 		8906B398B8AE692670EB8B6E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -335,6 +411,23 @@
 				PRODUCT_NAME = Snooker;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		EEF47C03E8C418D4CDABE66B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hashtagrk.snookertracker.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Snooker;
 			};
 			name = Release;
 		};
@@ -420,6 +513,15 @@
 			buildConfigurations = (
 				F44122D710E8C00045878769 /* Debug */,
 				0D6028C44D186BD9837C9E69 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		9094731D1D83A76EA3E06666 /* Build configuration list for PBXNativeTarget "SnookerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E4F8FAE90FAA1378F3AD6E7 /* Debug */,
+				EEF47C03E8C418D4CDABE66B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

@@ -44,11 +44,23 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.hashtagrk.snookertracker.tests
         GENERATE_INFOPLIST_FILE: YES
+  SnookerUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [SnookerUITests]
+    dependencies:
+      - target: Snooker
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.hashtagrk.snookertracker.uitests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: Snooker
 schemes:
   Snooker:
     build:
       targets:
         Snooker: all
         SnookerTests: [test]
+        SnookerUITests: [test]
     test:
-      targets: [SnookerTests]
+      targets: [SnookerTests, SnookerUITests]

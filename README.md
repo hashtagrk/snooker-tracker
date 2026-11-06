@@ -70,6 +70,10 @@ the same look, built from native controls:
   Saved players (Raj, Ajay, Anvay and Ninad to start) seat with a tap; star a typed name to save
   it, press and hold a saved name to remove it. A frame in progress can be resumed from here,
   and New frame on the table offers "Change players" to come back
+- on the table: a visit starts on a red and a colour can only follow a red; fouls go to every
+  opponent; tap a player to put them at the table; Foul 5/6/7 wear blue, pink and black
+- History: who potted which balls and who fouled, visit by visit, for this frame and the
+  last 30
 - the whole frame fits on one screen, with the table at the bottom where a thumb reaches it
 - haptics on pots, fouls and end of visit; New frame asks for confirmation
 - the screen stays awake while the app is open, so the phone can sit on the table
@@ -88,5 +92,5 @@ renaming files, run `xcodegen generate` in `ios/`.
 5. Press **Run** (⌘R). The first time, approve the developer under **Settings → General → VPN & Device Management**.
 
 With a free Apple ID the app runs for 7 days before it needs reinstalling from Xcode.
-Tests: `xcodebuild test -project ios/Snooker.xcodeproj -scheme Snooker -destination 'platform=iOS Simulator,name=iPhone 17'`.
+Tests (unit + a UI walk-through of intro → setup → table → history): `xcodebuild test -project ios/Snooker.xcodeproj -scheme Snooker -destination 'platform=iOS Simulator,name=iPhone 17'`.
 The icon source is `assets/icon-only.png`.

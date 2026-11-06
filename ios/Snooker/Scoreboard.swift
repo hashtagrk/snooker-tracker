@@ -8,14 +8,32 @@ import Observation
 final class Scoreboard {
     private(set) var frame: Frame
     private(set) var history: [Frame]
+    /// Frames that were played before this one, oldest first, for the history page.
+    private(set) var pastFrames: [Frame]
 
     private let defaults: UserDefaults
     private static let key = "snooker.frame.v1"
     private static let historyLimit = 200
+    private static let pastFrameLimit = 30
 
     private struct Saved: Codable {
         var frame: Frame
         var history: [Frame]
+        var pastFrames: [Frame]
+
+        init(frame: Frame, history: [Frame], pastFrames: [Frame]) {
+            self.frame = frame
+            self.history = history
+            self.pastFrames = pastFrames
+        }
+
+        // saves from before past frames were kept have no `pastFrames`
+        init(from decoder: Decoder) throws {
+            let c = try decoder.container(keyedBy: CodingKeys.self)
+            frame = try c.decode(Frame.self, forKey: .frame)
+            history = try c.decodeIfPresent([Frame].self, forKey: .history) ?? []
+            pastFrames = try c.decodeIfPresent([Frame].self, forKey: .pastFrames) ?? []
+        }
     }
 
     init(defaults: UserDefaults = .standard) {
@@ -24,9 +42,11 @@ final class Scoreboard {
            let saved = try? JSONDecoder().decode(Saved.self, from: data) {
             frame = saved.frame
             history = saved.history
+            pastFrames = saved.pastFrames
         } else {
             frame = Frame()
             history = []
+            pastFrames = []
         }
     }
 
@@ -65,24 +85,32 @@ final class Scoreboard {
     /// Starts a fresh frame with the players chosen on the setup screen.
     func startFrame(players: Int, names: [String]) {
         var fresh = Frame()
-        fresh.foulRule = frame.foulRule
         fresh.setPlayers(players)
         for seat in 0..<min(names.count, Frame.seats) {
             fresh.names[seat] = String(names[seat].trimmingCharacters(in: .whitespacesAndNewlines).prefix(18))
         }
+        archive()
         frame = fresh
         history = []
         save()
     }
 
     func newFrame() {
+        archive()
         frame = frame.newFrame()
         history = []
         save()
     }
 
+    /// Keeps a frame that was actually played so the history page can show it.
+    private func archive() {
+        guard frameInProgress else { return }
+        pastFrames.append(frame)
+        if pastFrames.count > Self.pastFrameLimit { pastFrames.removeFirst() }
+    }
+
     private func save() {
-        if let data = try? JSONEncoder().encode(Saved(frame: frame, history: history)) {
+        if let data = try? JSONEncoder().encode(Saved(frame: frame, history: history, pastFrames: pastFrames)) {
             defaults.set(data, forKey: Self.key)
         }
     }

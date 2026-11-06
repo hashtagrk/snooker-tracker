@@ -8,7 +8,7 @@ struct ScoreboardView: View {
     /// Back to the setup screen to change who is playing.
     var onChangePlayers: () -> Void = {}
     @State private var confirmingNewFrame = false
-    @FocusState private var editingSeat: Int?
+    @State private var showingHistory = false
 
     private var frame: Frame { board.frame }
 
@@ -30,7 +30,6 @@ struct ScoreboardView: View {
         .padding(.top, 4)
         .padding(.bottom, 2)
         .background(background)
-        .ignoresSafeArea(.keyboard)
         .confirmationDialog("Start a new frame?", isPresented: $confirmingNewFrame, titleVisibility: .visible) {
             Button("Same players", role: .destructive) {
                 board.newFrame()
@@ -40,40 +39,31 @@ struct ScoreboardView: View {
         } message: {
             Text("Scores and the reds reset.")
         }
+        .sheet(isPresented: $showingHistory) {
+            HistoryView(current: board.frame, past: board.pastFrames)
+        }
     }
 
     // MARK: header
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("\(handed) \(Text("Snooker").italic().foregroundStyle(Palette.brass))")
-                .font(.system(size: 28, design: .serif))
-                .foregroundStyle(Palette.chalk)
-                .lineLimit(1)
-                .minimumScaleFactor(0.7)
-
-            HStack(alignment: .bottom, spacing: 14) {
-                VStack(alignment: .leading, spacing: 4) {
-                    Eyebrow(text: "Players")
-                    Picker("Players", selection: playersBinding) {
-                        ForEach(Array(Frame.playerRange), id: \.self) { Text("\($0)").tag($0) }
-                    }
-                    .pickerStyle(.segmented)
-                    .frame(width: 160)
+            HStack(alignment: .center) {
+                Text("\(handed) \(Text("Snooker").italic().foregroundStyle(Palette.brass))")
+                    .font(.system(size: 28, design: .serif))
+                    .foregroundStyle(Palette.chalk)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                Spacer(minLength: 8)
+                Button { showingHistory = true } label: {
+                    Label("History", systemImage: "clock.arrow.circlepath")
+                        .font(.board(14, .semibold))
+                        .foregroundStyle(Palette.brass)
+                        .padding(.horizontal, 12)
+                        .frame(minHeight: 36)
+                        .overlay(Capsule().strokeBorder(Palette.brassDim))
                 }
-                if frame.players > 2 {
-                    // with two players both rules give the points to the same person
-                    VStack(alignment: .leading, spacing: 4) {
-                        Eyebrow(text: "Fouls to")
-                        Picker("Foul points go to", selection: foulRuleBinding) {
-                            Text(frame.players == 3 ? "Both" : "All").tag(FoulRule.allOpponents)
-                            Text("Next").tag(FoulRule.nextPlayer)
-                        }
-                        .pickerStyle(.segmented)
-                        .frame(width: 120)
-                    }
-                }
-                Spacer(minLength: 0)
+                .buttonStyle(BallPressStyle())
             }
 
             Rectangle().fill(Palette.brassDim).frame(height: 1)
@@ -84,31 +74,20 @@ struct ScoreboardView: View {
         ["Two", "Three", "Four", "Five"][frame.players - 2] + "-Handed"
     }
 
-    private var playersBinding: Binding<Int> {
-        Binding(get: { frame.players }, set: { count in
-            editingSeat = nil
-            board.apply { $0.setPlayers(count) }
-            haptic(.light)
-        })
-    }
-
-    private var foulRuleBinding: Binding<FoulRule> {
-        Binding(get: { frame.foulRule }, set: { rule in board.apply { $0.foulRule = rule } })
-    }
-
     // MARK: player rows
 
     private var rails: some View {
         VStack(spacing: 6) {
             ForEach(0..<frame.players, id: \.self) { seat in
                 PlayerRow(
-                    seat: seat,
-                    name: Binding(get: { frame.names[seat] }, set: { board.rename(seat: seat, to: $0) }),
+                    name: frame.names[seat].isEmpty ? "Player \(seat + 1)" : frame.names[seat],
                     score: frame.scores[seat],
                     tally: tally(for: seat),
-                    atTable: seat == frame.current,
-                    editingSeat: $editingSeat
-                )
+                    atTable: seat == frame.current
+                ) {
+                    board.apply { $0.select(seat) }
+                    haptic(.light)
+                }
             }
         }
         .frame(maxHeight: .infinity, alignment: .top)
@@ -153,10 +132,10 @@ struct ScoreboardView: View {
                         board.apply { $0.foul(value) }
                         UINotificationFeedbackGenerator().notificationOccurred(.warning)
                     }
+                    .buttonStyle(ChipStyle(tint: foulTint(value)))
                     .accessibilityLabel("Foul, \(value) points")
                 }
             }
-            .buttonStyle(ChipStyle())
 
             Grid(horizontalSpacing: 6) {
                 GridRow {
@@ -192,18 +171,25 @@ struct ScoreboardView: View {
     }
 
     private var potLabel: String {
-        if frame.reds > 0 { return "Pot" }
+        if frame.reds > 0 { return frame.colourOn ? "Pot — a colour" : "Pot — a red" }
         if frame.freeColour { return "Pot — any colour after the last red" }
         if frame.on <= 7 { return "Colours in order — \(Ball.all[frame.on - 1].name.lowercased()) is on" }
         return "Table cleared"
     }
 
     private var ruleNote: String {
-        if frame.foulRule == .nextPlayer { return "A foul gives its points to the next player" }
-        switch frame.players {
-        case 2: return "A foul gives its points to the opponent"
-        case 3: return "A foul gives its points to both opponents"
-        default: return "A foul gives its points to all opponents"
+        frame.players == 2
+            ? "A foul gives its points to the opponent · tap a player to put them at the table"
+            : "A foul gives its points to all opponents · tap a player to put them at the table"
+    }
+
+    /// Fouls 5, 6 and 7 wear the blue, pink and black they are named after.
+    private func foulTint(_ value: Int) -> (fill: Color, label: Color)? {
+        switch value {
+        case 5: (Palette.ball(5).fill, .white)
+        case 6: (Palette.ball(6).fill, Palette.ball(6).label)
+        case 7: (Palette.ball(7).fill, .white)
+        default: nil
         }
     }
 
@@ -218,25 +204,30 @@ struct ScoreboardView: View {
     }
 }
 
+/// One player's score. Tapping it puts that player at the table.
 private struct PlayerRow: View {
-    let seat: Int
-    @Binding var name: String
+    let name: String
     let score: Int
     let tally: String
     let atTable: Bool
-    var editingSeat: FocusState<Int?>.Binding
+    let select: () -> Void
 
     var body: some View {
+        Button(action: select) { row }
+            .buttonStyle(BallPressStyle())
+            .accessibilityLabel(name)
+            .accessibilityValue(atTable ? "At the table, \(score) points" : "\(score) points")
+            .accessibilityHint(atTable ? "" : "Puts \(name) at the table")
+            .accessibilityAddTraits(atTable ? .isSelected : [])
+    }
+
+    private var row: some View {
         HStack(spacing: 12) {
             VStack(alignment: .leading, spacing: 2) {
-                TextField("Player \(seat + 1)", text: $name)
+                Text(name)
                     .font(.board(16, .semibold))
                     .foregroundStyle(Palette.chalk)
-                    .textInputAutocapitalization(.words)
-                    .autocorrectionDisabled()
-                    .submitLabel(.done)
-                    .focused(editingSeat, equals: seat)
-                    .accessibilityLabel("Player \(seat + 1) name")
+                    .lineLimit(1)
                 Text(tally.uppercased())
                     .font(.board(11, .medium))
                     .tracking(0.8)
@@ -272,8 +263,7 @@ private struct PlayerRow: View {
             RoundedRectangle(cornerRadius: 10)
                 .strokeBorder(atTable ? Palette.brassDim : Color(hex: 0x262C2F))
         )
-        .accessibilityElement(children: .contain)
-        .accessibilityValue(atTable ? "At the table, \(score) points" : "\(score) points")
+        .contentShape(RoundedRectangle(cornerRadius: 10))
     }
 }
 

@@ -66,14 +66,17 @@ struct Eyebrow: View {
 /// The table's rectangular buttons: fouls, red off, undo, new frame, end visit.
 struct ChipStyle: ButtonStyle {
     var prominent = false
+    /// A solid fill and label colour, for chips dressed as a ball.
+    var tint: (fill: Color, label: Color)?
 
     func makeBody(configuration: Configuration) -> some View {
-        ChipBody(configuration: configuration, prominent: prominent)
+        ChipBody(configuration: configuration, prominent: prominent, tint: tint)
     }
 
     private struct ChipBody: View {
         let configuration: Configuration
         let prominent: Bool
+        let tint: (fill: Color, label: Color)?
         @Environment(\.isEnabled) private var isEnabled
 
         var body: some View {
@@ -83,15 +86,15 @@ struct ChipStyle: ButtonStyle {
                 .textCase(.uppercase)
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
-                .foregroundStyle(prominent ? Palette.ink : Palette.chalk)
+                .foregroundStyle(tint?.label ?? (prominent ? Palette.ink : Palette.chalk))
                 .frame(maxWidth: .infinity, minHeight: prominent ? 50 : 42)
                 .background(
                     RoundedRectangle(cornerRadius: 8)
-                        .fill(prominent ? Palette.brass : Palette.chip.opacity(0.85))
+                        .fill(tint?.fill ?? (prominent ? Palette.brass : Palette.chip.opacity(0.85)))
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
-                        .strokeBorder(prominent ? Palette.brass : Color.white.opacity(0.17))
+                        .strokeBorder(tint.map { _ in Color.black.opacity(0.25) } ?? (prominent ? Palette.brass : Color.white.opacity(0.17)))
                 )
                 .opacity(isEnabled ? 1 : 0.35)
                 .scaleEffect(configuration.isPressed ? 0.96 : 1)
@@ -105,5 +108,46 @@ struct BallPressStyle: ButtonStyle {
         configuration.label
             .scaleEffect(configuration.isPressed ? 0.9 : 1)
             .animation(.easeOut(duration: 0.1), value: configuration.isPressed)
+    }
+}
+
+/// Lays chips out left to right, wrapping onto new lines.
+struct FlowLayout: Layout {
+    var spacing: CGFloat
+
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+        let rows = arrange(width: proposal.width ?? .infinity, subviews: subviews)
+        let height = rows.last.map { $0.y + $0.height } ?? 0
+        return CGSize(width: proposal.width ?? rows.map(\.width).max() ?? 0, height: height)
+    }
+
+    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+        for row in arrange(width: bounds.width, subviews: subviews) {
+            var x = bounds.minX
+            for index in row.items {
+                let size = subviews[index].sizeThatFits(.unspecified)
+                subviews[index].place(at: CGPoint(x: x, y: bounds.minY + row.y), proposal: ProposedViewSize(size))
+                x += size.width + spacing
+            }
+        }
+    }
+
+    private struct Row { var items: [Int] = []; var y: CGFloat = 0; var width: CGFloat = 0; var height: CGFloat = 0 }
+
+    private func arrange(width: CGFloat, subviews: Subviews) -> [Row] {
+        var rows: [Row] = [Row()]
+        for index in subviews.indices {
+            let size = subviews[index].sizeThatFits(.unspecified)
+            if !rows[rows.count - 1].items.isEmpty, rows[rows.count - 1].width + spacing + size.width > width {
+                let last = rows[rows.count - 1]
+                rows.append(Row(y: last.y + last.height + spacing))
+            }
+            var row = rows[rows.count - 1]
+            row.width += (row.items.isEmpty ? 0 : spacing) + size.width
+            row.height = max(row.height, size.height)
+            row.items.append(index)
+            rows[rows.count - 1] = row
+        }
+        return rows
     }
 }

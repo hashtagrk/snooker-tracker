@@ -11,14 +11,25 @@ final class FrameTests: XCTestCase {
         XCTAssertEqual(frame.current, 3)
     }
 
-    func testFoulToNextPlayerOnly() {
+    func testFoulWithTwoPlayersGoesToTheOpponent() {
         var frame = Frame()
-        frame.foulRule = .nextPlayer
-        frame.setPlayers(4)
-        frame.current = 3
+        frame.setPlayers(2)
+        frame.current = 1
         frame.foul(7)
-        XCTAssertEqual(Array(frame.scores.prefix(4)), [7, 0, 0, 0])
+        XCTAssertEqual(Array(frame.scores.prefix(2)), [7, 0])
         XCTAssertEqual(frame.current, 0)
+    }
+
+    func testSelectingAPlayerPutsThemAtTheTable() {
+        var frame = Frame()
+        frame.setPlayers(4)
+        frame.pot(1)
+        frame.select(2)
+        XCTAssertEqual(frame.current, 2)
+        XCTAssertEqual(frame.currentBreak, 0, "a new visit starts")
+        XCTAssertEqual(frame.scores[0], 1, "points already scored stay")
+        frame.select(4)
+        XCTAssertEqual(frame.current, 2, "seat 5 is not in a four-player frame")
     }
 
     func testRotationWrapsAtPlayerCount() {
@@ -34,6 +45,7 @@ final class FrameTests: XCTestCase {
         frame.setPlayers(5)
         frame.current = 4
         frame.pot(1)
+        frame.pot(7)
         frame.setPlayers(3)
         XCTAssertEqual(frame.current, 0, "the player at the table left, so the turn resets")
         frame.setPlayers(5)
@@ -48,10 +60,49 @@ final class FrameTests: XCTestCase {
         XCTAssertEqual(frame.players, 3)
     }
 
-    func testEveryColourIsOnWhileRedsRemain() {
-        let frame = Frame()
-        XCTAssertTrue((1...7).allSatisfy(frame.canPot))
+    func testRedThenColourWhileRedsRemain() {
+        var frame = Frame()
+        XCTAssertEqual((1...7).filter(frame.canPot), [1], "a visit starts on a red")
+        frame.pot(5)
+        XCTAssertEqual(frame.scores[0], 0, "a colour cannot be potted first")
+        frame.pot(1)
+        XCTAssertEqual((1...7).filter(frame.canPot), [2, 3, 4, 5, 6, 7], "a colour after a red")
+        frame.pot(7)
+        XCTAssertEqual((1...7).filter(frame.canPot), [1], "back to a red")
+        frame.pot(1)
+        frame.endVisit()
+        XCTAssertEqual((1...7).filter(frame.canPot), [1], "the next visit starts on a red")
         XCTAssertFalse((1...7).contains(where: frame.isOffTable))
+    }
+
+    func testFoulAfterARedPutsTheNextPlayerOnARed() {
+        var frame = Frame()
+        frame.pot(1)
+        frame.foul(4)
+        XCTAssertEqual((1...7).filter(frame.canPot), [1])
+    }
+
+    func testVisitsGroupPotsAndFoulsAndSkipMisses() {
+        var frame = Frame()
+        frame.setPlayers(2)
+        frame.pot(1); frame.pot(7); frame.pot(1); frame.pot(6)
+        frame.endVisit()                 // player 1: 15
+        frame.endVisit()                 // player 2 misses: not shown
+        frame.pot(1); frame.foul(5)      // player 1 pots a red, then fouls
+        frame.select(0)                  // turn order corrected
+        frame.pot(1)
+        XCTAssertEqual(frame.visits.map(\.seat), [0, 0, 0])
+        XCTAssertEqual(frame.visits.map(\.balls), [[1, 7, 1, 6], [1], [1]])
+        XCTAssertEqual(frame.visits.map(\.foul), [nil, 5, nil])
+        XCTAssertEqual(frame.visits[0].points, 15)
+    }
+
+    func testOldSavesWithoutNewFieldsStillLoad() throws {
+        let json = #"{"players":2,"names":["A","B","","",""],"scores":[5,0,0,0,0],"highBreaks":[5,0,0,0,0],"current":0,"currentBreak":0,"reds":14,"on":2,"freeColour":false,"foulRule":"allOpponents"}"#
+        let frame = try JSONDecoder().decode(Frame.self, from: Data(json.utf8))
+        XCTAssertEqual(frame.scores[0], 5)
+        XCTAssertEqual(frame.log, [])
+        XCTAssertFalse(frame.colourOn)
     }
 
     func testColourAfterLastRedIsReSpotted() {
@@ -119,16 +170,14 @@ final class FrameTests: XCTestCase {
         XCTAssertEqual(frame.currentBreak, 1)
     }
 
-    func testNewFrameKeepsNamesPlayersAndRule() {
+    func testNewFrameKeepsNamesAndPlayers() {
         var frame = Frame()
         frame.names[0] = "Asha"
         frame.setPlayers(4)
-        frame.foulRule = .nextPlayer
         frame.pot(1)
         let fresh = frame.newFrame()
         XCTAssertEqual(fresh.names[0], "Asha")
         XCTAssertEqual(fresh.players, 4)
-        XCTAssertEqual(fresh.foulRule, .nextPlayer)
         XCTAssertEqual(fresh.scores, Array(repeating: 0, count: Frame.seats))
         XCTAssertEqual(fresh.reds, 15)
     }
@@ -183,12 +232,10 @@ final class ScoreboardTests: XCTestCase {
 
     func testStartFrameSeatsChosenPlayers() {
         let board = Scoreboard(defaults: freshDefaults())
-        board.apply { $0.foulRule = .nextPlayer }
         board.apply { $0.pot(1) }
         board.startFrame(players: 4, names: ["Raj", " Ajay ", "", "Ninad"])
         XCTAssertEqual(board.frame.players, 4)
         XCTAssertEqual(Array(board.frame.names.prefix(4)), ["Raj", "Ajay", "", "Ninad"])
-        XCTAssertEqual(board.frame.foulRule, .nextPlayer, "the foul rule carries over")
         XCTAssertEqual(board.frame.scores[0], 0)
         XCTAssertFalse(board.frameInProgress)
     }
@@ -225,5 +272,20 @@ final class RosterTests: XCTestCase {
         let roster = Roster(defaults: defaults)
         Roster.defaultNames.forEach(roster.remove)
         XCTAssertEqual(Roster(defaults: defaults).names, [])
+    }
+}
+
+@MainActor
+final class PastFrameTests: XCTestCase {
+    func testPlayedFramesAreKeptForHistory() {
+        let board = Scoreboard(defaults: UserDefaults(suiteName: "snooker.past.\(UUID().uuidString)")!)
+        board.newFrame()
+        XCTAssertEqual(board.pastFrames.count, 0, "an unplayed frame is not kept")
+        board.apply { $0.pot(1) }
+        board.newFrame()
+        board.apply { $0.pot(1) }
+        board.startFrame(players: 2, names: ["Raj", "Ajay"])
+        XCTAssertEqual(board.pastFrames.count, 2)
+        XCTAssertEqual(board.pastFrames[0].visits.first?.balls, [1])
     }
 }
