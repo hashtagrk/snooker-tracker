@@ -7,8 +7,11 @@ final class FlowTests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
 
+        // setup is built underneath the intro, so wait for the intro to go before tapping
+        let intro = app.buttons["Snookerin. Keep score to lose to Raj."]
+        XCTAssertTrue(intro.waitForNonExistence(timeout: 6), "the intro lasts three seconds")
         let start = app.buttons["START FRAME"]
-        XCTAssertTrue(start.waitForExistence(timeout: 6), "setup follows the intro")
+        XCTAssertTrue(start.waitForExistence(timeout: 2), "setup follows the intro")
         XCTAssertTrue(app.buttons["Raj"].exists || app.buttons["Raj, seated"].exists, "saved players are offered")
         save(app, "setup")
 
