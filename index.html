@@ -4,9 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Three-Handed Snooker</title>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Oswald:wght@400;500;600&display=swap">
+<meta name="theme-color" content="#15181a">
 <style>
+  @font-face { font-family: "Instrument Serif"; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/instrument-serif-latin-400-normal.woff2) format("woff2"); }
+  @font-face { font-family: "Instrument Serif"; font-style: italic; font-weight: 400; font-display: swap; src: url(fonts/instrument-serif-latin-400-italic.woff2) format("woff2"); }
+  @font-face { font-family: "Oswald"; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/oswald-latin-400-normal.woff2) format("woff2"); }
+  @font-face { font-family: "Oswald"; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/oswald-latin-500-normal.woff2) format("woff2"); }
+  @font-face { font-family: "Oswald"; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/oswald-latin-600-normal.woff2) format("woff2"); }
+
   :root {
     --slate: #15181a;
     --slate-rail: #1c2124;
@@ -34,12 +39,16 @@
     --radius: 10px;
   }
 
-  html, body { height: 100%; }
+  html { min-height: 100%; background: var(--slate-sink); }
+  /* min-height, not height: the gradient has to stretch with a board taller than the screen */
+  body { min-height: 100%; box-sizing: border-box; }
   body {
     margin: 0;
-    padding-block: clamp(1rem, 0.6rem + 1.6vw, 2rem);
-    padding-left: 16px;
-    padding-right: 16px;
+    /* env() keeps the board clear of the notch and home indicator on iPhone */
+    padding-top: max(clamp(1rem, 0.6rem + 1.6vw, 2rem), env(safe-area-inset-top));
+    padding-bottom: max(clamp(1rem, 0.6rem + 1.6vw, 2rem), env(safe-area-inset-bottom));
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
     background:
       radial-gradient(130% 60% at 50% -10%, #23292b 0%, var(--slate) 55%, var(--slate-sink) 100%);
     color: var(--chalk);
@@ -242,16 +251,29 @@
   var state = freshFrame();
   var past = [];
 
+  /* In the iOS app, Capacitor exposes native plugins here. iOS can evict a web view's
+     localStorage, so the frame is also kept in native preferences there. */
+  var native = window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()
+    ? window.Capacitor.Plugins : null;
+
+  function restore(raw) {
+    if (!raw) return;
+    var saved = JSON.parse(raw);
+    if (saved && Array.isArray(saved.scores) && saved.scores.length === 3) state = Object.assign(freshFrame(), saved);
+  }
   function load() {
-    try {
-      var raw = localStorage.getItem(STORE);
-      if (!raw) return;
-      var saved = JSON.parse(raw);
-      if (saved && Array.isArray(saved.scores) && saved.scores.length === 3) state = Object.assign(freshFrame(), saved);
-    } catch (e) { /* storage unavailable - start a fresh frame */ }
+    try { restore(localStorage.getItem(STORE)); } catch (e) { /* storage unavailable - start a fresh frame */ }
+  }
+  function loadNative() {
+    if (!native || !native.Preferences) return Promise.resolve();
+    return native.Preferences.get({ key: STORE })
+      .then(function (r) { restore(r.value); })
+      .catch(function () { /* keep whatever localStorage had */ });
   }
   function save() {
-    try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) { /* nothing to do */ }
+    var raw = JSON.stringify(state);
+    try { localStorage.setItem(STORE, raw); } catch (e) { /* nothing to do */ }
+    if (native && native.Preferences) native.Preferences.set({ key: STORE, value: raw }).catch(function () {});
   }
   function snapshot() {
     past.push(JSON.stringify(state));
@@ -442,7 +464,15 @@
   });
 
   load();
-  render();
+  if (!native) render();
+  else {
+    // render() saves, so read native storage first; the splash screen covers the wait.
+    loadNative().then(function () {
+      render();
+      if (native.StatusBar) native.StatusBar.setStyle({ style: "DARK" }).catch(function () {});
+      if (native.SplashScreen) native.SplashScreen.hide().catch(function () {});
+    });
+  }
 </script>
 </body>
 </html>
