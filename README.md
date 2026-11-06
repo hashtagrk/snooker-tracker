@@ -64,8 +64,12 @@ player in sync.
 `ios/` is **Snookerin**, a native SwiftUI app — not the web page in a wrapper. It has the same rules and
 the same look, built from native controls:
 
-- a three-second intro when it opens (tap to skip): Break-off, Pot the black, Ball letters or
-  Cue strike, chosen in `IntroStyle` — launch with `-introStyle cueStrike` to try another
+- a three-second intro when it opens (tap to skip): the cue strikes the white, which rolls
+  across and uncovers the name
+- then a setup screen: how many are playing (2–5) and who. Blank seats are "Player 1", "Player 2"….
+  Saved players (Raj, Ajay, Anvay and Ninad to start) seat with a tap; star a typed name to save
+  it, press and hold a saved name to remove it. A frame in progress can be resumed from here,
+  and New frame on the table offers "Change players" to come back
 - the whole frame fits on one screen, with the table at the bottom where a thumb reaches it
 - haptics on pots, fouls and end of visit; New frame asks for confirmation
 - the screen stays awake while the app is open, so the phone can sit on the table

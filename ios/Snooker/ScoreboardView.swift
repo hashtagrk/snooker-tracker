@@ -5,6 +5,8 @@ import UIKit
 /// anchored at the bottom where a thumb reaches them.
 struct ScoreboardView: View {
     let board: Scoreboard
+    /// Back to the setup screen to change who is playing.
+    var onChangePlayers: () -> Void = {}
     @State private var confirmingNewFrame = false
     @FocusState private var editingSeat: Int?
 
@@ -30,12 +32,13 @@ struct ScoreboardView: View {
         .background(background)
         .ignoresSafeArea(.keyboard)
         .confirmationDialog("Start a new frame?", isPresented: $confirmingNewFrame, titleVisibility: .visible) {
-            Button("New frame", role: .destructive) {
+            Button("Same players", role: .destructive) {
                 board.newFrame()
                 haptic(.heavy)
             }
+            Button("Change players") { onChangePlayers() }
         } message: {
-            Text("Scores and the reds reset. Names, players and the foul rule stay.")
+            Text("Scores and the reds reset.")
         }
     }
 

@@ -180,4 +180,50 @@ final class ScoreboardTests: XCTestCase {
         XCTAssertFalse(board.canUndo)
         XCTAssertEqual(board.frame.reds, 15)
     }
+
+    func testStartFrameSeatsChosenPlayers() {
+        let board = Scoreboard(defaults: freshDefaults())
+        board.apply { $0.foulRule = .nextPlayer }
+        board.apply { $0.pot(1) }
+        board.startFrame(players: 4, names: ["Raj", " Ajay ", "", "Ninad"])
+        XCTAssertEqual(board.frame.players, 4)
+        XCTAssertEqual(Array(board.frame.names.prefix(4)), ["Raj", "Ajay", "", "Ninad"])
+        XCTAssertEqual(board.frame.foulRule, .nextPlayer, "the foul rule carries over")
+        XCTAssertEqual(board.frame.scores[0], 0)
+        XCTAssertFalse(board.frameInProgress)
+    }
+}
+
+@MainActor
+final class RosterTests: XCTestCase {
+    private func freshDefaults() -> UserDefaults {
+        UserDefaults(suiteName: "snooker.roster.tests.\(UUID().uuidString)")!
+    }
+
+    func testFirstLaunchHasTheDefaultGroup() {
+        XCTAssertEqual(Roster(defaults: freshDefaults()).names, ["Raj", "Ajay", "Anvay", "Ninad"])
+    }
+
+    func testAddIgnoresBlanksAndDuplicatesAnyCase() {
+        let roster = Roster(defaults: freshDefaults())
+        roster.add("  ")
+        roster.add("raj")
+        roster.add(" Vik ")
+        XCTAssertEqual(roster.names, ["Raj", "Ajay", "Anvay", "Ninad", "Vik"])
+    }
+
+    func testRemoveAndPersist() {
+        let defaults = freshDefaults()
+        let roster = Roster(defaults: defaults)
+        roster.remove("AJAY")
+        roster.add("Vik")
+        XCTAssertEqual(Roster(defaults: defaults).names, ["Raj", "Anvay", "Ninad", "Vik"])
+    }
+
+    func testAnEmptiedListStaysEmpty() {
+        let defaults = freshDefaults()
+        let roster = Roster(defaults: defaults)
+        Roster.defaultNames.forEach(roster.remove)
+        XCTAssertEqual(Roster(defaults: defaults).names, [])
+    }
 }

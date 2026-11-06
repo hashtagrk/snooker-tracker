@@ -57,6 +57,24 @@ final class Scoreboard {
         save()
     }
 
+    /// True once anything has been scored, so the setup screen can offer to resume.
+    var frameInProgress: Bool {
+        canUndo || frame.reds < 15 || frame.scores.contains { $0 != 0 }
+    }
+
+    /// Starts a fresh frame with the players chosen on the setup screen.
+    func startFrame(players: Int, names: [String]) {
+        var fresh = Frame()
+        fresh.foulRule = frame.foulRule
+        fresh.setPlayers(players)
+        for seat in 0..<min(names.count, Frame.seats) {
+            fresh.names[seat] = String(names[seat].trimmingCharacters(in: .whitespacesAndNewlines).prefix(18))
+        }
+        frame = fresh
+        history = []
+        save()
+    }
+
     func newFrame() {
         frame = frame.newFrame()
         history = []

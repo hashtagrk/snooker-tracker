@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		13D8F7B40A2211E0515643D3 /* Roster.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5EF785865D9F51651E7567 /* Roster.swift */; };
 		14B37C82F3AFCF69C3D31CA9 /* FrameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4211CC05992100A298B73 /* FrameTests.swift */; };
 		1A07E1988A86F62B8EF1C7BF /* SnookerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2E209752E2F980702AE809 /* SnookerApp.swift */; };
 		1FF8EAC9445A286079892895 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3342C8E320E43A643935BF74 /* Theme.swift */; };
+		28AEE61618B9985A75F1AE3E /* SetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC512FF72524B0FA23E4E480 /* SetupView.swift */; };
 		4847A5E5737C02CB43732306 /* IntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F790B3866230E0164226227 /* IntroView.swift */; };
 		4C31F9D5D23668175F9B1CBA /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38548A6D6D5820F80F2327A4 /* Frame.swift */; };
 		93F0175CB6CFC5BF2D0F1B5C /* ScoreboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4558C21C09DDE75CD2BB5B9 /* ScoreboardView.swift */; };
@@ -38,6 +40,8 @@
 		7FF4CF4329DD7868C181C384 /* SnookerTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SnookerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		95BC8FEBCB9ABF210928FF2F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B4140B55547B76D2F1B8CEB7 /* Scoreboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scoreboard.swift; sourceTree = "<group>"; };
+		BC512FF72524B0FA23E4E480 /* SetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupView.swift; sourceTree = "<group>"; };
+		BD5EF785865D9F51651E7567 /* Roster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Roster.swift; sourceTree = "<group>"; };
 		F4558C21C09DDE75CD2BB5B9 /* ScoreboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreboardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -58,8 +62,10 @@
 				38548A6D6D5820F80F2327A4 /* Frame.swift */,
 				95BC8FEBCB9ABF210928FF2F /* Info.plist */,
 				1F790B3866230E0164226227 /* IntroView.swift */,
+				BD5EF785865D9F51651E7567 /* Roster.swift */,
 				B4140B55547B76D2F1B8CEB7 /* Scoreboard.swift */,
 				F4558C21C09DDE75CD2BB5B9 /* ScoreboardView.swift */,
+				BC512FF72524B0FA23E4E480 /* SetupView.swift */,
 				6A2E209752E2F980702AE809 /* SnookerApp.swift */,
 				3342C8E320E43A643935BF74 /* Theme.swift */,
 			);
@@ -174,8 +180,10 @@
 			files = (
 				4C31F9D5D23668175F9B1CBA /* Frame.swift in Sources */,
 				4847A5E5737C02CB43732306 /* IntroView.swift in Sources */,
+				13D8F7B40A2211E0515643D3 /* Roster.swift in Sources */,
 				BB33AC258EEA55C96586E465 /* Scoreboard.swift in Sources */,
 				93F0175CB6CFC5BF2D0F1B5C /* ScoreboardView.swift in Sources */,
+				28AEE61618B9985A75F1AE3E /* SetupView.swift in Sources */,
 				1A07E1988A86F62B8EF1C7BF /* SnookerApp.swift in Sources */,
 				1FF8EAC9445A286079892895 /* Theme.swift in Sources */,
 			);

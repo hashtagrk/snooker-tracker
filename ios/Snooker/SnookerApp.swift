@@ -4,7 +4,9 @@ import UIKit
 @main
 struct SnookerApp: App {
     @State private var board = Scoreboard()
+    @State private var roster = Roster()
     @State private var showingIntro = true
+    @State private var playing = false
     @Environment(\.scenePhase) private var scenePhase
 
     init() {
@@ -20,9 +22,20 @@ struct SnookerApp: App {
     var body: some Scene {
         WindowGroup {
             ZStack {
-                ScoreboardView(board: board)
+                // intro, then who's playing, then the table
+                if playing {
+                    ScoreboardView(board: board) {
+                        withAnimation(.easeOut(duration: 0.3)) { playing = false }
+                    }
+                    .transition(.move(edge: .trailing))
+                } else {
+                    SetupView(board: board, roster: roster) {
+                        withAnimation(.easeOut(duration: 0.3)) { playing = true }
+                    }
+                    .transition(.move(edge: .leading))
+                }
                 if showingIntro {
-                    IntroView(style: .current) {
+                    IntroView {
                         withAnimation(.easeOut(duration: 0.35)) { showingIntro = false }
                     }
                     .transition(.opacity)
